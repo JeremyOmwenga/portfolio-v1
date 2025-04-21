@@ -1,103 +1,271 @@
-import Image from "next/image";
-
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimalist Portfolio</title>
+  <style>
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    body {
+      background-color: #ffffff;
+      color: #000000;
+      line-height: 1.6;
+    }
+    
+    .container {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+    }
+    
+    section {
+      height: 100vh;
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2rem;
+      position: relative;
+    }
+    
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+    
+    h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+    }
+    
+    p {
+      font-size: 1.25rem;
+      max-width: 600px;
+      margin-bottom: 2rem;
+    }
+    
+    .nav {
+      position: fixed;
+      top: 2rem;
+      right: 2rem;
+      z-index: 100;
+    }
+    
+    .nav a {
+      color: #000;
+      text-decoration: none;
+      margin-left: 1.5rem;
+      font-weight: 500;
+      transition: opacity 0.3s ease;
+    }
+    
+    .nav a:hover {
+      opacity: 0.7;
+    }
+    
+    /* Intro Section */
+    .intro {
+      background-color: #ffffff;
+    }
+    
+    .tag {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+    }
+    
+    /* Projects Section */
+    .projects {
+      background-color: #f2f2f2;
+    }
+    
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+    }
+    
+    .project-card {
+      background-color: #ffffff;
+      padding: 1.5rem;
+      border: 1px solid #000;
+      transition: transform 0.3s ease;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .project-title {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .project-desc {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .view-link {
+      color: #000;
+      text-decoration: none;
+      border-bottom: 1px solid #000;
+      padding-bottom: 2px;
+      font-weight: 500;
+      transition: opacity 0.3s ease;
+    }
+    
+    .view-link:hover {
+      opacity: 0.7;
+    }
+    
+    /* Contact Section */
+    .contact {
+      background-color: #ffffff;
+    }
+    
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .contact-link {
+      font-size: 1.25rem;
+      color: #000;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: opacity 0.3s ease;
+    }
+    
+    .contact-link:hover {
+      opacity: 0.7;
+    }
+    
+    .section-number {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+    
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      h2 {
+        font-size: 1.75rem;
+      }
+      
+      .project-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .nav {
+        position: fixed;
+        top: auto;
+        bottom: 1rem;
+        right: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="#intro">Intro</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  
+  <div class="container">
+    <section id="intro" class="intro">
+      <div class="section-number">01</div>
+      <div class="tag">Designer & Developer</div>
+      <h1>Alex Morgan</h1>
+      <p>I create minimal and functional digital experiences, focusing on clean aesthetics and intuitive user interfaces.</p>
+      <p>Currently based in Montreal, working at the intersection of design and technology.</p>
+    </section>
+    
+    <section id="projects" class="projects">
+      <div class="section-number">02</div>
+      <h2>Selected Projects</h2>
+      <div class="project-grid">
+        <div class="project-card">
+          <h3 class="project-title">Monochrome</h3>
+          <p class="project-desc">A black and white photography platform with custom image processing.</p>
+          <a href="#" class="view-link">View Project</a>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
+        
+        <div class="project-card">
+          <h3 class="project-title">Minimalist E-commerce</h3>
+          <p class="project-desc">Clean, focused shopping experience for a fashion brand.</p>
+          <a href="#" class="view-link">View Project</a>
+        </div>
+        
+        <div class="project-card">
+          <h3 class="project-title">Type System</h3>
+          <p class="project-desc">Custom typography framework for responsive web applications.</p>
+          <a href="#" class="view-link">View Project</a>
+        </div>
+      </div>
+    </section>
+    
+    <section id="contact" class="contact">
+      <div class="section-number">03</div>
+      <h2>Get In Touch</h2>
+      <p>Interested in working together? Feel free to reach out through any of the platforms below.</p>
+      
+      <div class="contact-links">
+        <a href="mailto:hello@alexmorgan.com" class="contact-link">
+          hello@alexmorgan.com
         </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
+        <a href="https://twitter.com/alexmorgan" class="contact-link">
+          Twitter
         </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
+        <a href="https://linkedin.com/in/alexmorgan" class="contact-link">
+          LinkedIn
         </a>
-      </footer>
-    </div>
-  );
-}
+        <a href="https://github.com/alexmorgan" class="contact-link">
+          GitHub
+        </a>
+      </div>
+    </section>
+  </div>
+  
+  <script>
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        targetElement.scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
